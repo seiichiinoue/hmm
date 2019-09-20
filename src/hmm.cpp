@@ -239,3 +239,147 @@ void HMM::MStep(const Observation &o,
     }
     LOG(INFO) << "Finish re-estimation of B" << std::endl;
 };
+
+void HMM::check_params_consistency() {
+    for (int i=0; i<_N; ++i) {
+        double sum = 0.0;
+        for (int j=0; j<_N; ++j) {
+            CHECK_LE(0.0, _a[i][j]);
+            CHECK_LE(_a[i][j], 1.0);
+            sum += _a[i][j];
+        }
+        CHECK_DOUBLE_EQ(1.0, sum);
+    }
+    for (int i=0; i<_N; ++i) {
+        double sum = 0.0;
+        for (int k=0; k<_M; ++k) {
+            sum += _b[i][k];
+            CHECK_LE(0.0, _b[i][k]);
+            CHECK_LE(_b[i][k], 1.0);
+        }
+    }
+    double sum = 0.0;
+    for (int i=0; i<_N; ++i) {
+        sum += _pi[i];
+    }
+    CHECK_DOUBLE_EQ(1.0, sum);
+};
+
+double HMM::likelihood(const Observation &o) {
+    return exp(log_likelihood(o));
+};
+
+double HMM::log_likelihood(const Observation &o) {
+    return -accumulate(_c.begin(), _c.end(), 0.0, log_sum);
+};
+
+void HMM::viterbi(const Observation &o) {
+    // initialization
+    init_alpha_and_c(o);
+    init_beta(o);
+
+    const int T= o.size();
+
+    // step1
+    std::vector<double> init;
+    std::vector<std::map<int, int>> psi;
+    {
+        std::map<int, int> tmp;
+        psi.push_back(tmp);
+    }
+
+    for (int i=0; i<_N; ++i) {
+        init.push_back(log(_pi[i]) + log(_b[i][o[0]]));
+        std::map<int, int> tmp;
+        psi.push_back(tmp);
+        psi[0][i] = 0;
+    }
+
+    for (int t=0; t<T-1; ++t) {
+        std::map<int, int> tmp;
+        psi.push_back(tmp);
+    }
+
+    std::vector<std::vector<double>> log_delta;
+    log_delta.push_back(init);
+    for (int t=0; t<T; ++t) {
+        std::vector<double> tmp(_N);
+        log_delta.push_back(tmp);
+    }
+
+    // step2
+    for (int t=0; t<T-1; ++t) {
+        for (int j=0; j<_N; ++j) {
+            double log_max = -std::numeric_limits<double>::max();
+            for (int i=0; i<_N; ++i) {
+                if (log_delta[t][i] + log(_a[i][j]) > log_max) {
+                    log_max = log_delta[t][i] + log(_a[i][j]);
+                    psi[t+1][j] = i;
+                }
+            }
+            log_delta[t+1][j] = log_max + log(_b[j][o[t+1]]);
+        }
+    }
+
+    // step3
+    double log_p_hat = -std::numeric_limits<double>::max();
+    int q_T = 0;
+    for (int i=0; i<_N; ++i) {
+        if (log_delta[_N-1][i] > log_p_hat) {
+            log_p_hat = log_delta[_N-1][i];
+            q_T = i;
+        }
+    }
+
+    std::map<int, int> q_hat;
+    q_hat[T] = q_T;
+
+    // step4: backtrack
+    for (int t=T-2; t>=0; --t) {
+        q_hat[t] = psi[t+1][q_hat[t+1]];
+    }
+
+    for (int t=0; t<T; ++t) {
+        std::cout << _id2word[o[t]] << "/" << q_hat[t] << " ";
+    }
+    std::cout << std::endl;
+    LOG(ERROR) << "p_hat: " << exp(log_p_hat) << std::endl;
+};
+
+void HMM::randomize() {
+    boost::mt19937 gen(static_cast<unsigned long>(time(0)));
+    boost::uniform_real<> range(0, 1);
+    boost::variate_generator<boost::mt19937&, boost::uniform_real<>> random_value(gen, range);
+
+    for (int i=0; i<_N; ++i) {
+        double sum = 0.0;
+        for (int j=0; j<_N; ++j) {
+            double r = random_value();
+            sum += r; _a[i][j] = r;
+        }
+        for (int j=0; j<_N; ++j) {
+            _a[i][j] /= sum;
+        }
+    }
+
+    for (int i=0; i<_N; ++i) {
+        double sum = 0.0;
+        for (int k=0; k<_M; ++k) {
+            double r = random_value();
+            sum += r; _b[i][k] = r;
+        }
+        for (int k=0; k<_M; ++k) {
+            _b[i][k] /= sum;
+        }
+    }
+
+    double sum = 0.0;
+    for (int i=0; i<_N; ++i) {
+        double r = random_value();
+        sum += r; _pi[i] = r;
+    }
+    for (int i=0; i<_N; ++i) {
+        _pi[i] /= sum;
+    }
+};
+
