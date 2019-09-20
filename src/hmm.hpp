@@ -38,6 +38,7 @@ public:
     void forward(const Observation &o, bool init = true);
     void backward(const Observation &o, bool init = true);
     void forward_backward(const Observation &o);
+    void viterbi(const Observation &o);
     int getId(const std::string &str, const bool train);
 
 protected:
@@ -67,8 +68,8 @@ protected:
                 std::vector<std::vector<double>> &sum_of_gamma);
     
     void MStep(const Observation &o,
-                std::vector<std::vector<std::vector<double>>> &gamma,
-                std::vector<std::vector<double>> &sum_of_gamma);
+                const std::vector<std::vector<std::vector<double>>> &gamma,
+                const std::vector<std::vector<double>> &sum_of_gamma);
 
     double likelihood(const Observation &o);
     double log_likelihood(const Observation &o);
