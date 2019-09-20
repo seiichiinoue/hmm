@@ -1,0 +1,8 @@
+# ignore all
+*
+
+# ignore any
+!*/src
+!*.cpp
+!*.hpp
+!.gitignore
