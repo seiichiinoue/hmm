@@ -222,4 +222,20 @@ void HMM::MStep(const Observation &o,
         }
     }
     LOG(INFO) << "Finish re-estimation of A" << std::endl;
+
+    // re-estimate B
+    LOG(INFO) << "Start re-estimation of B" << std::endl;
+    int i = 0;
+    std::vector<std::vector<double> >::const_iterator it_sum_of_gamma = sum_of_gamma.begin();
+    for(std::vector<std::vector<double> >::iterator it_i = _b.begin(),
+        it_end_i = _b.end(); it_i != it_end_i; ++it_i, ++it_sum_of_gamma, ++i) {
+        double denom = accumulate(it_sum_of_gamma->begin(), it_sum_of_gamma->end(), 0.0);
+        int j = 0;
+        for(std::vector<double>::iterator it_j = it_i->begin(),
+            it_end_j = it_i->end(); it_j != it_end_j; ++it_j, ++j) {
+            double numer = accumulate(_tmp[i][j].begin(), _tmp[i][j].end(), 0.0, map_sum);
+            *it_j = numer / denom;
+        }
+    }
+    LOG(INFO) << "Finish re-estimation of B" << std::endl;
 };
