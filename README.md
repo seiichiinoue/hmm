@@ -12,5 +12,4 @@ the implementation of hidden markov model with C++
 ## Reference
 
 - [A Revealing Introduction to Hidden Markov Models](https://www.cs.sjsu.edu/~stamp/RUA/HMM.pdf)
-
 - [neural networks for nlp](http://www.phontron.com/teaching.php)
