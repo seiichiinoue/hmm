@@ -382,4 +382,3 @@ void HMM::randomize() {
         _pi[i] /= sum;
     }
 };
-
