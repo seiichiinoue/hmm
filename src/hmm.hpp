@@ -12,7 +12,7 @@
 #include <limits>
 #include <fstream>
 #include <sstream>
-#include <tr1/unordered_map>
+#include <unordered_map>
 #include <boost/random.hpp>
 #include <gflags/gflags.h>
 #include <glog/logging.h>
@@ -57,7 +57,7 @@ protected:
     //scaling coefficient
     std::vector<double> _c;
 
-    std::vector<std::vector<std::tr1::unordered_map<int, double>>> _tmp;
+    std::vector<std::vector<std::unordered_map<int, double>>> _tmp;
 
     int _N;
     int _M;
