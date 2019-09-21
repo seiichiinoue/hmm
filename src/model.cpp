@@ -109,7 +109,7 @@ Model::Model() {
 
     _M = _b[0].size();
     _N = _pi.size();
-};
+}
 
 void Model::run() {
     Model::Observation o;
@@ -120,4 +120,4 @@ void Model::run() {
     o.push_back(4);
 
     viterbi(o);
-};
+}

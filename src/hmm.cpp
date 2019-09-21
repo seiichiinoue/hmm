@@ -7,17 +7,17 @@ DEFINE_int32(ITER, 10, "Number of iteration");
 
 double map_sum(double sum, const std::pair<int, double> pair) {
     return sum + pair.second;
-};
+}
 
 double log_sum(double sum, const double d) {
     return sum + log(d);
-};
+}
 
 HMM::HMM() : _N(0), _M(0) {
-};
+}
 
 HMM::~HMM() {
-};
+}
 
 void HMM::train(const int N) {
     _N = N;
@@ -26,7 +26,7 @@ void HMM::train(const int N) {
         _b.push_back(std::vector<double>(_N));
         _pi.push_back(0.0);
     }
-};
+}
 
 int HMM::getId(const std::string &str, const bool train) {
     std::map<std::string, int>::const_iterator it = _word2id.find(str);
@@ -40,7 +40,7 @@ int HMM::getId(const std::string &str, const bool train) {
     } else {
         return _M;
     }
-};
+}
 
 void HMM::read(const std::string &filename, Observation &o, const bool train) {
     std::ifstream ifs(filename.c_str());
@@ -58,7 +58,7 @@ void HMM::read(const std::string &filename, Observation &o, const bool train) {
         }
     }
     _M = static_cast<int>(_word2id.size());
-};
+}
 
 void HMM::init_alpha_and_c(const Observation &o) {
     const int T = o.size();  // length of sequence
@@ -85,7 +85,7 @@ void HMM::init_alpha_and_c(const Observation &o) {
         std::vector<double> tmp(_N);
         _alpha.push_back(tmp);
     }
-};
+}
 
 void HMM::init_beta(const Observation &o) {
     int T = o.size();   // length of sequence
@@ -101,16 +101,16 @@ void HMM::init_beta(const Observation &o) {
         init.push_back(_c[T-1]);
     }
     _beta.push_back(init);
-};
+}
 
 void HMM::set_a(TransitionMatrix &a) {
     _a = a;
-};
+}
 
 void HMM::set_b(EmissionMatrix &b) {
     _b = b;
     _M = _b[0].size();
-};
+}
 
 void HMM::forward(const Observation &o, bool init) {
     init_alpha_and_c(o);
@@ -132,7 +132,7 @@ void HMM::forward(const Observation &o, bool init) {
             _alpha[t][i] *= _c[t];
         }
     }
-};
+}
 
 void HMM::backward(const Observation &o, bool init) {
     init_beta(o);
@@ -146,7 +146,7 @@ void HMM::backward(const Observation &o, bool init) {
             _beta[t][i] *= _c[t];
         }
     }
-};
+}
 
 void HMM::forward_backward(const Observation &o) {
     const int T = o.size();
@@ -177,7 +177,7 @@ void HMM::forward_backward(const Observation &o) {
         LOG(WARNING) << "Finished " << iter << "th M-Step" << std::endl;
         LOG(WARNING) << "After " << iter << "th iteration: " << log_likelihood(o) << std::endl;
     }
-};
+}
 
 void HMM::EStep(const Observation &o,
                 std::vector<std::vector<std::vector<double>>> &gamma,
@@ -200,7 +200,7 @@ void HMM::EStep(const Observation &o,
             _tmp[i][o[t]][t] = sum_of_gamma[i][t];
         }
     }
-};
+}
 
 void HMM::MStep(const Observation &o,
                 const std::vector<std::vector<std::vector<double>>> &gamma,
@@ -238,7 +238,7 @@ void HMM::MStep(const Observation &o,
         }
     }
     LOG(INFO) << "Finish re-estimation of B" << std::endl;
-};
+}
 
 void HMM::check_params_consistency() {
     for (int i=0; i<_N; ++i) {
@@ -263,15 +263,15 @@ void HMM::check_params_consistency() {
         sum += _pi[i];
     }
     CHECK_DOUBLE_EQ(1.0, sum);
-};
+}
 
 double HMM::likelihood(const Observation &o) {
     return exp(log_likelihood(o));
-};
+}
 
 double HMM::log_likelihood(const Observation &o) {
     return -accumulate(_c.begin(), _c.end(), 0.0, log_sum);
-};
+}
 
 void HMM::viterbi(const Observation &o) {
     // initialization
@@ -344,7 +344,7 @@ void HMM::viterbi(const Observation &o) {
     }
     std::cout << std::endl;
     LOG(ERROR) << "p_hat: " << exp(log_p_hat) << std::endl;
-};
+}
 
 void HMM::randomize() {
     boost::mt19937 gen(static_cast<unsigned long>(time(0)));
@@ -381,4 +381,4 @@ void HMM::randomize() {
     for (int i=0; i<_N; ++i) {
         _pi[i] /= sum;
     }
-};
+}
