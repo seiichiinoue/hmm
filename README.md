@@ -5,6 +5,7 @@ the implementation of hidden markov model with C++
 ## Environment
 
 - C++ 11+
+- clang 10.0+
 - boost 1.71.0
 - glog 0.4.0
 - gflag 2.2.2
