@@ -13,17 +13,15 @@ double log_sum(double sum, const double d) {
     return sum + log(d);
 }
 
-HMM::HMM() : _N(0), _M(0) {
-}
+HMM::HMM() : _N(0), _M(0) {}
 
-HMM::~HMM() {
-}
+HMM::~HMM() {}
 
 void HMM::train(const int N) {
     _N = N;
     for (int i=0; i<_N; ++i) {
         _a.push_back(std::vector<double>(_N));
-        _b.push_back(std::vector<double>(_N));
+        _b.push_back(std::vector<double>(_M));
         _pi.push_back(0.0);
     }
 }
@@ -33,10 +31,10 @@ int HMM::getId(const std::string &str, const bool train) {
     if (it != _word2id.end()) {
         return it->second;
     } else if (train) {
-        int newID = static_cast<int>(_word2id.size());
-        _word2id[str] = newID;
+        int newId = static_cast<int>(_word2id.size());
+        _word2id[str] = newId;
         _id2word.push_back(str);
-        return newID;
+        return newId;
     } else {
         return _M;
     }
@@ -45,7 +43,7 @@ int HMM::getId(const std::string &str, const bool train) {
 void HMM::read(const std::string &filename, Observation &o, const bool train) {
     std::ifstream ifs(filename.c_str());
     if (!ifs.is_open()) {
-        LOG(FATAL) << filename << ": cannnot open" << std::endl;
+        LOG(FATAL) << filename << ": cannot open" << std::endl;
     } else {
         LOG(INFO) << "Start reading: " << filename << std::endl;
     }
@@ -110,6 +108,11 @@ void HMM::set_a(TransitionMatrix &a) {
 void HMM::set_b(EmissionMatrix &b) {
     _b = b;
     _M = _b[0].size();
+}
+
+void HMM::set_pi(InitialProbVector &pi) {
+    _pi = pi;
+    _N = _pi.size();
 }
 
 void HMM::forward(const Observation &o, bool init) {
@@ -193,8 +196,8 @@ void HMM::EStep(const Observation &o,
     for (int t=0; t<T-1; ++t) {
         double denom = 0.0;
         for (int i=0; i<_N; ++i) {
-            for (int j=0; i<_N; ++j) {
-                gamma[i][j][t] = (_alpha[t][i] * _a[i][j] * _b[j][o[t + 1]] * _beta[t + 1][j]) / denom;
+            for (int j=0; j<_N; ++j) {
+                gamma[i][j][t] = (_alpha[t][i] * _a[i][j] * _b[j][o[t+1]] * _beta[t+1][j]) / denom;
                 sum_of_gamma[i][t] += gamma[i][j][t];
             }
             _tmp[i][o[t]][t] = sum_of_gamma[i][t];
@@ -214,9 +217,9 @@ void HMM::MStep(const Observation &o,
 
     // re-estimate A
     LOG(INFO) << "Start re-estimation of A" << std::endl;
-    for(int i = 0; i < _N; i++) {
+    for(int i=0; i<_N; i++) {
         double denom = accumulate(sum_of_gamma[i].begin(), sum_of_gamma[i].end(), 0.0);
-        for(int j = 0; j < _N; j++) {
+        for(int j=0; j<_N; j++) {
             double nemer = accumulate(gamma[i][j].begin(), gamma[i][j].end(), 0.0);
             _a[i][j] = (nemer / denom);
         }
