@@ -156,12 +156,12 @@ void HMM::forward_backward(const Observation &o) {
 
     // initialization
     std::vector<std::vector<std::vector<double>>> gamma(_N);
-    _tmp = std::vector<std::vector<std::tr1::unordered_map<int, double>>>(_N);
+    _tmp = std::vector<std::vector<std::unordered_map<int, double>>>(_N);
     std::vector<std::vector<double>> sum_of_gamma(_N);
 
     for (int i=0; i<_N; ++i) {
         gamma[i] = std::vector<std::vector<double>>(_N);
-        _tmp[i] = std::vector<std::tr1::unordered_map<int, double>>(_M);
+        _tmp[i] = std::vector<std::unordered_map<int, double>>(_M);
         sum_of_gamma[i] = std::vector<double>(T-1);
         for (int j=0; j<_N; ++j) {
             gamma[i][j] = std::vector<double>(T-1);
