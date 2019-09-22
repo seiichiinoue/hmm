@@ -1,7 +1,7 @@
-#include "model.hpp"
+#include "viterbi_example.hpp"
 
 int main(int argc, char *argv[]) {
-    Model model;
+    SampleModel model;
     model.run();
     return 0;
 }

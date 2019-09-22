@@ -1,6 +1,6 @@
-#include "model.hpp"
+#include "viterbi_example.hpp"
 
-Model::Model() {
+SampleModel::SampleModel() {
     {
         std::vector<double> tmp;
         tmp.push_back(0.3);
@@ -111,8 +111,8 @@ Model::Model() {
     _N = _pi.size();
 }
 
-void Model::run() {
-    Model::Observation o;
+void SampleModel::run() {
+    SampleModel::Observation o;
     o.push_back(0);
     o.push_back(1);
     o.push_back(2);
