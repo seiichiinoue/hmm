@@ -2,6 +2,13 @@
 
 the implementation of hidden markov model and viterbi algorithm with C++
 
+## Todo 
+
+- implementation of Infinit Hidden Markov Model
+- Sampling of Hyper Parameters
+- Beam Sampling
+
+
 ## Environment
 
 - C++ 11+
@@ -27,7 +34,7 @@ $ cd data/
 $ ./grade-bayes-hmm.pl reference.txt result.txt
 ```
 
-## Reslut
+## Result
 
 experimental setting as follows:
 
