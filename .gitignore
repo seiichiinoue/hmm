@@ -7,3 +7,4 @@
 !*.cpp
 !*.hpp
 !.gitignore
+!makefile
