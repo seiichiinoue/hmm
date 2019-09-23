@@ -3,8 +3,8 @@
 #include <boost/foreach.hpp>
 #include "hmm.hpp"
 
-DEFINE_int32(N, 10, "Number of hidden stete");
-DEFINE_string(DATA, "data/wiki-example.txt", "Data file");
+DEFINE_int32(N, 30, "Number of hidden stete");
+DEFINE_string(DATA, "../data/wiki-sample.word", "Data file");
 
 int main(int argc, char *argv[]) {
     google::InitGoogleLogging(*argv);
