@@ -1,6 +1,6 @@
 # Hidden Markov Model
 
-the implementation of hidden markov model with C++
+the implementation of hidden markov model and viterbi algorithm with C++
 
 ## Environment
 
