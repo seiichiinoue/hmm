@@ -16,15 +16,14 @@ the implementation of hidden markov model with C++
 - training and backtrack
 
 ```
-$ cd src/
-$ clang++ -std=c++11 -stdlib=libc++ hmm.cpp model.cpp -I/usr/local/include/ -L/usr/local/lib -lglog -lgflags -o hmm.out
-$ ./hmm.out -ITER=10 > ../data/result.txt
+$ make
+$ ./hmm -ITER=200 > data/result.txt
 ```
 
 - valuation
 
 ```
-$ cd ../data/
+$ cd data/
 $ ./grade-bayes-hmm.pl reference.txt result.txt
 ```
 
