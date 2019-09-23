@@ -20,7 +20,7 @@ the implementation of hidden markov model and viterbi algorithm with C++
 
 ## Usage
 
-- training and backtrack
+- training and predict pos with viterbi algorithm
 
 ```
 $ make
