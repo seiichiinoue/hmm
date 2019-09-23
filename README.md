@@ -10,6 +10,24 @@ the implementation of hidden markov model with C++
 - glog 0.4.0
 - gflag 2.2.2
 
+
+## Usage
+
+- training and backtrack
+
+```
+$ cd src/
+$ clang++ -std=c++11 -stdlib=libc++ hmm.cpp model.cpp -I/usr/local/include/ -L/usr/local/lib -lglog -lgflags -o hmm.out
+$ ./hmm.out -ITER=10 > ../data/result.txt
+```
+
+- valuation
+
+```
+$ cd ../data/
+$ ./grade-bayes-hmm.pl reference.txt result.txt
+```
+
 ## Reference
 
 - [A Revealing Introduction to Hidden Markov Models](https://www.cs.sjsu.edu/~stamp/RUA/HMM.pdf)
