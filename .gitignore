@@ -3,6 +3,7 @@
 
 # ignore any
 !*/
+!/data/*
 !*.cpp
 !*.hpp
 !.gitignore
