@@ -197,6 +197,12 @@ void HMM::EStep(const Observation &o,
         double denom = 0.0;
         for (int i=0; i<_N; ++i) {
             for (int j=0; j<_N; ++j) {
+                denom += _alpha[t][i] * _a[i][j] * _b[j][o[t+1]] * _beta[t+1][j];
+            }
+        }
+        for (int i=0; i<_N; ++i) {
+            sum_of_gamma[i][t] = 0.0;
+            for (int j=0; j<_N; ++j) {
                 gamma[i][j][t] = (_alpha[t][i] * _a[i][j] * _b[j][o[t+1]] * _beta[t+1][j]) / denom;
                 sum_of_gamma[i][t] += gamma[i][j][t];
             }
