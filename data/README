@@ -1,0 +1,28 @@
+ベイジアンHMMの実装課題
+by Graham Neubig (http://www.phontron.com)
+2010-11-10
+
+これはベイジアンHMMの実装課題に使えるデータとスクリプトです。
+以下のファイルが含まれています：
+
+-----
+
+wiki-sample.wordpart:
+  Wikipediaの文のサンプル。"単語/品詞"形式でアノテーションされている。
+  注：これはKyTeaで自動解析されたものを少し直したものなので、解析誤り
+  が入っている可能性があります。Wikipediaのデータなので、利用・配布
+  はCreativeCommonsライセンスに従ってください。
+
+wiki-sample.word:
+  wiki-sample.wordpartの品詞の除いたデータ。
+
+wiki-sample.example:
+  ベイジアンHMMの出力の例。"単語/クラスタ番号"形式になっている。
+
+grade-bayes-hmm.pl
+  教師なし品詞推定の評価用スクリプト。
+  Usage: grade-bayes-hmm.pl wiki-sample.wordpart wiki-sample.example
+  のように、リファレンスとシステムの出力を引数とする。
+  出力は、各教師なしクラスタはどのタグにマッピングされたかと品詞推定の
+  精度である。
+
