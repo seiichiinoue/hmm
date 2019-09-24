@@ -2,6 +2,8 @@
 
 the implementation of hidden markov model and viterbi algorithm with C++
 
+explanation of this implementation(myblog): [The implementation of Hidden Markov Model](https://seiichiinoue.github.io/post/hmm/)
+
 ## Todo 
 
 - implementation of Infinit Hidden Markov Model
