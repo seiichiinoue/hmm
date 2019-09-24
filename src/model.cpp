@@ -4,7 +4,7 @@
 #include "hmm.hpp"
 
 DEFINE_int32(N, 30, "Number of hidden stete");
-DEFINE_string(DATA, "data/wiki-sample.word", "Data file");
+DEFINE_string(DATA, "data/wiki-wakati.txt", "Data file");
 
 int main(int argc, char *argv[]) {
     google::InitGoogleLogging(*argv);
