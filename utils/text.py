@@ -20,7 +20,7 @@ class Text(object):
                 f.write(t)
         return None
 
-    def _morpho_analysis(self, path):
+    def _pos(self, path):
         self.chasen.parse("")
         with open(path, "w") as f:
             for i in range(len(self.text)):
@@ -32,3 +32,8 @@ class Text(object):
                         f.write(sf+'/'+pos+' ')
                     node = node.next
         return None
+
+if __name__ == '__main__':
+    t = Text("../text/kokoro.txt")
+    t._wakati("../data/kokoro-wakati.txt")
+    t._pos("../data/kokoro-pos.txt")
