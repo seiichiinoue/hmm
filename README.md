@@ -32,7 +32,7 @@ $ ./hmm -ITER=200 > data/wiki-result.txt
 - valuation
 
 ```
-$ ./util/grade-bayes-hmm.pl output/wiki-pos.txt output/wiki-result.txt
+$ ./util/grade-bayes-hmm.pl data/wiki-pos.txt data/wiki-result.txt
 ```
 
 ## Result
