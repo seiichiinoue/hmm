@@ -17,7 +17,7 @@ class Text(object):
         
         with open(path, "w") as f:
             for t in wakatied:
-                f.write(t)
+                f.write(t+'\n')
         return None
 
     def _pos(self, path):
@@ -34,6 +34,6 @@ class Text(object):
         return None
 
 if __name__ == '__main__':
-    t = Text("../text/kokoro.txt")
-    t._wakati("../data/kokoro-wakati.txt")
-    t._pos("../data/kokoro-pos.txt")
+    t = Text("../text/neko.txt")
+    t._wakati("../data/neko-wakati.txt")
+    t._pos("../data/neko-pos.txt")
