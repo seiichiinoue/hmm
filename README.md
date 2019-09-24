@@ -26,14 +26,13 @@ explanation of this implementation(myblog): [The implementation of Hidden Markov
 
 ```
 $ make
-$ ./hmm -ITER=200 > data/result.txt
+$ ./hmm -ITER=200 > data/wiki-result.txt
 ```
 
 - valuation
 
 ```
-$ cd data/
-$ ./grade-bayes-hmm.pl reference.txt result.txt
+$ ./util/grade-bayes-hmm.pl output/wiki-pos.txt output/wiki-result.txt
 ```
 
 ## Result
