@@ -4,6 +4,7 @@
 # ignore any
 !*/
 !/data/*
+!/utils/*
 !*.cpp
 !*.hpp
 !.gitignore
