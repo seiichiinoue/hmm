@@ -5,6 +5,7 @@
 !*/
 !/data/*
 !/utils/*
+!/text/*
 !*.cpp
 !*.hpp
 !.gitignore
