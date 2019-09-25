@@ -34,6 +34,6 @@ class Text(object):
         return None
 
 if __name__ == '__main__':
-    t = Text("../text/neko.txt")
+    t = Text("../data/neko.txt")
     t._wakati("../data/neko-wakati.txt")
     t._pos("../data/neko-pos.txt")
