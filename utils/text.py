@@ -1,3 +1,4 @@
+import argparse
 import MeCab
 
 class Text(object):
@@ -34,6 +35,11 @@ class Text(object):
         return None
 
 if __name__ == '__main__':
-    t = Text("../data/neko.txt")
-    t._wakati("../data/neko-wakati.txt")
-    t._pos("../data/neko-pos.txt")
+    parser = argparse.ArgumentParser(description='this script for text processing.')
+    parser.add_argument('--tar_path', help='text file path you want to process')
+    parser.add_argument('--wakati_save_path', help='path you wanto to save processed text')
+    parser.add_argument('--pos_save_path', help='path you want to save processed and pos tagged text')
+    args = parser.parse_args()
+    t = Text(args.tar_path)             # "../data/neko.txt"
+    t._wakati(args.wakati_save_path)    # "../data/neko-wakati.txt"
+    t._pos(args.pos_save_path)          # "../data/neko-pos.txt"
