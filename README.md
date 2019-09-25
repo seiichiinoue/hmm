@@ -22,6 +22,12 @@ explanation of this implementation(myblog): [The implementation of Hidden Markov
 
 ## Usage
 
+- if you want to use your additional data for training(**optional, NOTE: if you want to use text processing script, you must install **mecab-python3 package.**)
+
+```
+$ python utils/text.py --tar_path data/[filename].txt --wakati_save_path data/[filename]-wakati.txt --pos_save_path data/[filename]-pos.txt
+```
+
 - training and predict pos with viterbi algorithm
 
 ```
