@@ -33,6 +33,19 @@ class Text(object):
                         f.write(sf+'/'+pos+' ')
                     node = node.next
         return None
+    
+    def _count_num_of_pos(self, return_pos_list=False):
+        self.chasen.parse("")
+        s = set()
+        for i in range(len(self.text)):
+            node = self.chasen.parseToNode(self.text[i])
+            while node:
+                pos = node.feature.split(",")[0]
+                s.add(pos)
+                node = node.next
+        if return_pos_list:
+            return len(s), list(s)
+        return len(s)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='this script for text processing.')
@@ -40,6 +53,10 @@ if __name__ == '__main__':
     parser.add_argument('--wakati_save_path', help='path you wanto to save processed text')
     parser.add_argument('--pos_save_path', help='path you want to save processed and pos tagged text')
     args = parser.parse_args()
-    t = Text(args.tar_path)             # "../data/neko.txt"
-    t._wakati(args.wakati_save_path)    # "../data/neko-wakati.txt"
-    t._pos(args.pos_save_path)          # "../data/neko-pos.txt"
+    t = Text(args.tar_path)
+    t._wakati(args.wakati_save_path)
+    t._pos(args.pos_save_path)
+    num_of_pos, pos_list = t._count_num_of_pos(return_pos_list=True)
+    # print("num of pos:", num_of_pos)
+    # print("emerged part of speech:")
+    # print(" ".join(pos_list))
