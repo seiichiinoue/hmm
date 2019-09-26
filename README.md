@@ -8,6 +8,7 @@ explanation of this implementation(myblog): [The implementation of Hidden Markov
 
 - implementation of Infinit Hidden Markov Model
 - Sampling of Hyper Parameters
+- Gibbs Sampling
 - Beam Sampling
 
 
@@ -37,9 +38,19 @@ $ ./hmm -ITER=200 > data/wiki-result.txt
 
 - valuation
 
+you can choose perl(original) script or python(program myself) script
+
 ```
 $ ./utils/grade-bayes-hmm.pl data/wiki-pos.txt data/wiki-result.txt
 ```
+
+or 
+
+```
+$ python utils/valuation.py --ref data/wiki-pos.txt --test data/wiki-result.txt
+```
+
+
 
 ## Experimental Result
 
@@ -84,3 +95,4 @@ experimental setting as follows:
 - [A Revealing Introduction to Hidden Markov Models](https://www.cs.sjsu.edu/~stamp/RUA/HMM.pdf)
 - [neural networks for nlp](http://www.phontron.com/teaching.php)
 - [position tagging using hidden markov model](http://www.phontron.com/slides/nlp-programming-ja-04-hmm.pdf)
+- [introduction to nonparametric bayes](http://www.phontron.com/slides/nonparametric-tutorial-ja-1.pdf)
