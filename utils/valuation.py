@@ -23,12 +23,12 @@ def valuation(m):
     total, correct = 0, 0
     for num, pos_list in m.items():
         sorted_pos_list = sorted(pos_list.items(), reverse=True ,key=lambda x:x[1])
-        print("{} -> {}".format(sorted_pos_list[0][0], num))
+        print("{} -> {}".format(num, sorted_pos_list[0][0]))
         print(" ".join(["=".join(list(map(str, sorted_pos_list[i]))) for i in range(len(sorted_pos_list))]))
         correct += sorted_pos_list[0][1]
         total += sum(pos_list.values())
     acc = correct/total
-    print(acc)
+    print("accuracy:", acc)
     return acc
 
 # RUN: python valuation.py --ref ../data/neko-pos.txt --test ../data/neko-result.txt
