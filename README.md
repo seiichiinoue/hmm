@@ -36,7 +36,7 @@ $ make
 $ ./hmm -ITER=200 > data/wiki-result.txt
 ```
 
-- valuation
+- valuation (mapping minimizing error rate)
 
 you can choose perl(original) script or python(program myself) script
 
