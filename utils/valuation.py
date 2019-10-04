@@ -1,5 +1,9 @@
 import re
 import argparse
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 def mapping(ref_path, test_path):
     with open(ref_path, "r") as f:
@@ -31,6 +35,27 @@ def valuation(m):
     print("accuracy:", acc)
     return acc
 
+def visualize(m):
+    cols = []
+    for line in m.values():
+        cols += line.keys()
+    cols = list(set(cols))
+    # print(cols)
+    cols_dict = {}
+    for i, c in enumerate(cols):
+        cols_dict[c] = i
+    rows = sorted(list(map(int, m.keys())))
+    # print(sorted(list(map(int, rows))))
+    data = [[0 for _ in range(len(rows))] for _ in range(len(cols))]
+    for tag, dic in m.items():
+        for pos, num in dic.items():
+            data[cols_dict[pos]][int(tag)] = int(num)
+    data = np.array(data)
+    df = pd.DataFrame(data, index=cols, columns=rows)
+    plt.figure(figsize=(30, 20))
+    sns.heatmap(df, annot=True)
+    # plt.show()
+            
 # RUN: python valuation.py --ref ../data/neko-pos.txt --test ../data/neko-result.txt
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='this script for valuation.')
