@@ -1,7 +1,7 @@
 # ignore all
 *
 
-# ignore any
+# allow any
 !*/
 !/data/*
 !/utils/*
